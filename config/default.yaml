@@ -1,0 +1,45 @@
+# Default WorldSim AI Configuration
+
+simulation:
+  dt: 1.0
+  max_ticks: 500
+  deterministic: true
+  seed: 42
+
+world:
+  width: 50
+  height: 50
+
+agents:
+  vehicle:
+    count: 20
+    speed: 2.0
+    energy_cost: 3.0
+  human:
+    count: 30
+    speed: 1.0
+    energy_cost: 1.0
+  machine:
+    count: 10
+    speed: 0.0
+    energy_cost: 10.0
+    production_rate: 5.0
+  energy:
+    count: 5
+    speed: 0.0
+    energy_cost: 0.0
+    production_rate: 20.0
+
+ai:
+  enable_predictor: true
+  enable_optimizer: true
+  energy_budget: 2000
+
+metrics:
+  track:
+    - efficiency
+    - throughput
+    - resource_utilization
+    - stability
+    - total_energy_consumption
+    - total_production
