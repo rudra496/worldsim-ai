@@ -14,7 +14,7 @@
 **AI-Powered Digital Twin Simulation Platform**
 
 <p>
-<strong>Model, predict, and optimize real-world systems</strong> — smart cities, factories, energy grids, logistics networks, and more. Research-grade agent-based simulation with real-time 3D visualization, reinforcement learning, IoT data ingestion, distributed scaling, and a full digital twin framework. 100% free and open-source (MIT).
+<strong>Model, predict, and optimize real-world systems</strong> — smart cities, factories, energy grids, logistics networks, and more. Feature-rich agent-based simulation with real-time 3D visualization, reinforcement learning, IoT data ingestion, distributed scaling, and digital twin capabilities. 100% free and open-source (MIT).
 </p>
 
 > If you find this project useful, please consider giving it a ⭐ star — it helps more developers discover it!
@@ -114,7 +114,7 @@ cd frontend && npm install && npm start
 - **Load balancing** — threshold-based rebalancing with migration plans
 - **gRPC protocol** — dataclass-based message serialization (no protoc required)
 
-### 🏙 Full Digital Twin
+### 🏙 Digital Twin
 - **Live/replay/hybrid sync** modes — mirror real-world data or replay historical patterns
 - **GIS integration** — GeoJSON loading, coordinate transforms, geofencing with ray-casting
 - **Plugin system** — hot-reloadable plugins with ABC interface
