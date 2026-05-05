@@ -29,6 +29,34 @@ const SCENARIOS = [
     description: 'System resilience under failures and breakdowns',
     agents: 76,
   },
+  {
+    id: 'weather_system',
+    icon: '🌤️',
+    name: 'Weather System',
+    description: 'Temperature, precipitation, and wind patterns across zones',
+    agents: 90,
+  },
+  {
+    id: 'population_dynamics',
+    icon: '👥',
+    name: 'Population Dynamics',
+    description: 'Population growth, migration, and resource competition',
+    agents: 133,
+  },
+  {
+    id: 'supply_chain',
+    icon: '🔗',
+    name: 'Supply Chain Logistics',
+    description: 'Multi-node supply chain with factories and retail endpoints',
+    agents: 110,
+  },
+  {
+    id: 'smart_agriculture',
+    icon: '🌾',
+    name: 'Smart Agriculture',
+    description: 'Precision agriculture with irrigation and automated harvesting',
+    agents: 65,
+  },
 ];
 
 const ScenarioSelector = ({ selected, onSelect, collapsed, onToggle }) => {
