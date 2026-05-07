@@ -367,5 +367,5 @@ class AnomalyDetectorML:
     def load(self, path: str) -> None:
         data = json.loads(Path(path).read_text())
         self._mean = data["mean"]; self._std = data["std"]
-        self._trained = data["trained"]; self._threshold = data.get("threshold", 2.0)
+        self._trained = data["trained"]; self.threshold = data.get("threshold", 2.0)
         self._anomalies = data.get("anomalies", [])

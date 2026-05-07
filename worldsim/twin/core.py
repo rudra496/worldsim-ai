@@ -104,7 +104,7 @@ class DigitalTwin:
         """Start the digital twin: ingestion + simulation loop."""
         self.ingestion.start_all()
         self.engine.start()
-        self.plugin_manager.fire_hook("on_scenario_start", twin=self)
+        self.plugin_manager.execute_hook("on_scenario_start", {"twin_id": self.twin_id})
         self._running = True
         self._tick_thread = threading.Thread(target=self._tick_loop, daemon=True)
         self._tick_thread.start()
@@ -116,7 +116,7 @@ class DigitalTwin:
             self._tick_thread.join(timeout=5)
         self.ingestion.stop_all()
         self.engine.stop()
-        self.plugin_manager.fire_hook("on_scenario_end", twin=self)
+        self.plugin_manager.execute_hook("on_scenario_end", {"twin_id": self.twin_id})
         logger.info("DigitalTwin %s stopped at tick %d", self.twin_id, self._tick)
 
     def reset(self) -> None:
@@ -127,11 +127,11 @@ class DigitalTwin:
 
     def _tick_loop(self) -> None:
         while self._running:
-            self.plugin_manager.fire_hook("on_tick_start", twin=self, tick=self._tick)
+            self.plugin_manager.execute_hook("on_tick_start", {"tick": self._tick, "twin_id": self.twin_id})
             with self._lock:
                 self.engine.tick()
                 self._tick += 1
-            self.plugin_manager.fire_hook("on_tick_end", twin=self, tick=self._tick)
+            self.plugin_manager.execute_hook("on_tick_end", {"tick": self._tick, "twin_id": self.twin_id})
             time.sleep(self._tick_interval)
 
     @property

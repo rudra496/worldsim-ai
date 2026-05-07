@@ -253,7 +253,11 @@ class MetricsExportPlugin(Plugin):
 
 
 class SlackNotifyPlugin(Plugin):
-    """Sends alerts to Slack via webhook (stub — needs real webhook URL)."""
+    """Sends alerts to Slack via webhook URL.
+
+    Requires a valid webhook URL to deliver messages. If no URL is configured,
+    messages are queued locally and can be retrieved via get_pending_messages().
+    """
 
     def __init__(self, webhook_url: Optional[str] = None):
         self._webhook_url = webhook_url
@@ -269,11 +273,30 @@ class SlackNotifyPlugin(Plugin):
 
     def execute(self, hook: str, data: Dict[str, Any]) -> None:
         if hook == PluginHook.ANOMALY_DETECTED:
-            msg = f"⚠️ Anomaly at tick {data.get('tick', '?')}: {data.get('details', 'unknown')}"
-            self._message_queue.append({"text": msg, "severity": "warning"})
+            msg = f"Anomaly at tick {data.get('tick', '?')}: {data.get('details', 'unknown')}"
+            self._send_or_queue(msg, "warning")
         elif hook == PluginHook.OPTIMIZATION_APPLIED:
-            msg = f"🔧 Optimization applied at tick {data.get('tick', '?')}"
-            self._message_queue.append({"text": msg, "severity": "info"})
+            msg = f"Optimization applied at tick {data.get('tick', '?')}"
+            self._send_or_queue(msg, "info")
+
+    def _send_or_queue(self, text: str, severity: str) -> None:
+        payload = {"text": text, "severity": severity}
+        if self._webhook_url:
+            try:
+                import urllib.request
+                import json as _json
+                data = _json.dumps(payload).encode()
+                req = urllib.request.Request(
+                    self._webhook_url,
+                    data=data,
+                    headers={"Content-Type": "application/json"},
+                    method="POST",
+                )
+                urllib.request.urlopen(req, timeout=5)
+                return
+            except Exception:
+                pass
+        self._message_queue.append(payload)
 
     def get_pending_messages(self) -> List[Dict[str, str]]:
         msgs = list(self._message_queue)

@@ -72,7 +72,7 @@ class ResourceManager:
         self._resources[resource_type] = ResourceBucket(
             resource_type=resource_type,
             capacity=capacity,
-            current=current or capacity * 0.5,
+            current=current if current is not None else capacity * 0.5,
             production_rate=production_rate,
             consumption_rate=consumption_rate,
         )

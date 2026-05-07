@@ -79,7 +79,13 @@ class BaseAgent(ABC):
 
     def _perceive(self, world_state: Dict[str, Any]) -> List[Dict[str, Any]]:
         """Get information about nearby agents/environment."""
-        return []
+        # Extract relevant data from world state for behavior decisions
+        return [{
+            "tick": world_state.get("tick", 0),
+            "agent_count": world_state.get("agent_count", 0),
+            "total_energy": world_state.get("total_energy_consumption", 0),
+            "total_production": world_state.get("total_production", 0),
+        }]
 
     def _act(self, action: Dict[str, Any], env_state: Dict[str, Any]) -> None:
         """Execute the decided action."""
@@ -119,8 +125,9 @@ class VehicleAgent(BaseAgent):
         self.behavior = self.behavior or RuleBasedBehavior(
             rules=[
                 (
-                    lambda s, n: s.get("fuel", 100) < 10,
-                    lambda s, n: {"action": "refuel"},
+                    lambda s, n: self.params.get("fuel", 100) < 10,
+                    lambda s, n: (self.params.update({"fuel": 100.0}),
+                                  {"action": "refuel"})[1],
                 ),
                 (
                     lambda s, n: True,

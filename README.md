@@ -24,7 +24,7 @@
 [![GitHub watchers](https://img.shields.io/github/watchers/rudra496/worldsim-ai?style=social)](https://github.com/rudra496/worldsim-ai/watchers)
 [![GitHub discussions](https://img.shields.io/github/discussions/rudra496/worldsim-ai)](https://github.com/rudra496/worldsim-ai/discussions)
 
-[![Python 3.11+](https://img.shields.io/badge/Python-3.11+-3776AB.svg?style=flat&logo=python&logoColor=white)](https://python.org)
+[![Python 3.10+](https://img.shields.io/badge/Python-3.10+-3776AB.svg?style=flat&logo=python&logoColor=white)](https://python.org)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.104+-009688.svg?style=flat&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com)
 [![React](https://img.shields.io/badge/React-18-61DAFB.svg?style=flat&logo=react&logoColor=black)](https://reactjs.org)
 [![Three.js](https://img.shields.io/badge/Three.js-0.160-000000.svg?style=flat&logo=three.js&logoColor=white)](https://threejs.org)
@@ -33,7 +33,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat)](LICENSE)
 [![Docker](https://img.shields.io/badge/Docker-Ready-2496ED.svg?style=flat&logo=docker&logoColor=white)](https://docker.com)
 [![PRs Welcome](https://img.shields.io/badge/PRs-Welcome-brightgreen.svg?style=flat)](CONTRIBUTING.md)
-[![v1.0.0](https://img.shields.io/badge/Release-v1.0.0-2ea44f.svg?style=flat)](https://github.com/rudra496/worldsim-ai/releases/tag/v1.0.0)
+[![v0.1.0](https://img.shields.io/badge/Release-v0.1.0-2ea44f.svg?style=flat)](https://github.com/rudra496/worldsim-ai/releases/tag/v0.1.0)
 
 </div>
 
@@ -102,8 +102,8 @@ cd frontend && npm install && npm start
 - **2D ↔ 3D switcher** — seamless view switching
 
 ### 📡 Real-Time Data Ingestion
-- **MQTT source** — subscribe to IoT sensor topics with JSON/CSV parsing
-- **File source** — CSV/JSON ingestion with live tail support
+- **MQTT source** — subscribe to IoT sensor topics with JSON parsing (requires `paho-mqtt`)
+- **File source** — CSV/JSON/JSONL ingestion with live tail support
 - **REST API source** — periodic polling of external endpoints
 - **Simulator source** — synthetic data with noise, drift, and failure injection
 - **Alert manager** — CRITICAL/WARNING/INFO with configurable callbacks
@@ -119,7 +119,7 @@ cd frontend && npm install && npm start
 - **GIS integration** — GeoJSON loading, coordinate transforms, geofencing with ray-casting
 - **Plugin system** — hot-reloadable plugins with ABC interface
 - **Built-in plugins** — LoggingPlugin, MetricsExportPlugin (Prometheus), SlackNotifyPlugin
-- **Plugin marketplace** — catalog, search, install/uninstall from local registry
+- **Plugin marketplace** — local catalog with built-in plugins (extensible to remote registries)
 - **REST + WebSocket connector** — push/pull state, bidirectional sync
 - **API key auth** with role-based access control
 - **Rate limiting** — token bucket algorithm
@@ -127,7 +127,7 @@ cd frontend && npm install && npm start
 ### 📊 Dashboard & API
 - **React SPA** — dark theme, responsive, works standalone in demo mode
 - **Real-time WebSocket** — live simulation streaming to frontend
-- **8 REST endpoints** — scenarios, simulations, results, metrics
+- **9 API endpoints** — scenarios, simulations, results, metrics, health + WebSocket
 - **Metrics charts** — recharts for throughput, efficiency, stability, utilization
 - **CLI tool** — `worldsim run`, `list`, `demo`, `serve`
 
@@ -144,7 +144,7 @@ cd frontend && npm install && npm start
 
 | Version | Status | Description |
 |---------|--------|-------------|
-| **v0.1** | ✅ Done | Core engine, 4 agent types, grid/graph worlds, AI prediction + optimization, 4 scenarios, REST + WebSocket API, React dashboard, Docker |
+| **v0.1** | ✅ Done | Core engine, 4 agent types, grid/graph worlds, AI prediction + optimization, 8 scenarios, REST + WebSocket API, React dashboard, Docker |
 | **v0.2** | ✅ Done | PyTorch LSTM predictor (NumPy fallback), autoencoder anomaly detection, Gymnasium RL env, PPO/Q-learning agents, multi-agent AI system, adaptive feedback loops |
 | **v0.3** | ✅ Done | Three.js 3D world (React Three Fiber), orbit controls, 3D zones/agents with glow, day/night cycle, 2D↔3D view switcher |
 | **v0.4** | ✅ Done | MQTT/File/API/Simulator data sources, ingestion pipeline, ring buffer, data transformer, alert manager |
@@ -198,8 +198,6 @@ graph TB
         File_S["File Source"]
         API_S["API Source"]
         Sim_S["Simulator Source"]
-        DB[("PostgreSQL")]
-        Redis[("Redis")]
     end
 
     subgraph Twin ["🏙 Digital Twin"]
@@ -235,8 +233,6 @@ graph TB
     File_S --> Engine
     API_S --> Engine
     Sim_S --> Engine
-    Engine --> DB
-    Engine --> Redis
     GIS --> Engine
     Plugins --> Engine
     Market --> Plugins
@@ -265,10 +261,14 @@ S(t+1) = F(S(t), A(t), E(t))
 
 | # | Scenario | Description | Agents | Zones | Ticks |
 |---|----------|-------------|--------|-------|-------|
-| 🏙️ | **Smart City Traffic** | Urban traffic with vehicles & pedestrians across residential, commercial, and industrial zones | 105 | 8 | 300 |
-| 🏭 | **Factory Optimization** | Production line optimization with machines, workers, and energy constraints | 68 | 3 | 500 |
-| ⚡ | **Energy Balancing** | Multi-source energy grid with solar plants and varying demand patterns | 85 | 8 | 400 |
-| 🚨 | **Emergency Failure** | System resilience testing under power outages and machine breakdowns | 76 | 6 | 400 |
+| 🏙️ | **Smart City Traffic** | Urban traffic with vehicles & pedestrians across mixed-use city zones | 105 | 8 | 300 |
+| 🏭 | **Factory Optimization** | Production line with machines, workers, and energy constraints | 68 | 3 | 500 |
+| ⚡ | **Energy Balancing** | Multi-source energy grid with varying demand patterns | 85 | 8 | 400 |
+| 🌤️ | **Weather System** | Weather patterns with temperature, precipitation, and wind feedback | 90 | 13 | 600 |
+| 👥 | **Population Dynamics** | Population growth, migration, and resource competition | 133 | 10 | 500 |
+| 🔗 | **Supply Chain** | Multi-node supply chain with factories, warehouses, and retail | 110 | 10 | 400 |
+| 🌾 | **Smart Agriculture** | Precision agriculture with irrigation and automated harvesting | 65 | 10 | 500 |
+| 🚨 | **Emergency Failure** | System resilience testing under power outages and breakdowns | 76 | 6 | 400 |
 
 ---
 
@@ -306,7 +306,7 @@ worldsim-ai/
 │   └── nginx.conf                  # API proxy + SPA fallback
 │
 ├── 📁 config/                      # YAML configurations
-├── 🧪 tests/                       # Test suite (4 test files)
+├── 🧪 tests/                       # Test suite
 ├── 📄 docs/                        # Architecture, simulation guide
 ├── 🐳 docker-compose.yml           # One-command deploy (4 services)
 ├── 🐳 Dockerfile                   # Backend image
@@ -327,7 +327,6 @@ worldsim-ai/
 | **IoT** | paho-mqtt (optional) |
 | **Distributed** | gRPC (optional), pickle/zlib |
 | **Digital Twin** | GeoJSON, shapely (optional) |
-| **Database** | PostgreSQL, Redis |
 | **Deployment** | Docker, Nginx |
 
 ---
@@ -343,6 +342,7 @@ worldsim-ai/
 | `GET` | `/simulations/{id}` | Get simulation status |
 | `GET` | `/simulations/{id}/results` | Get simulation results |
 | `GET` | `/simulations/{id}/metrics` | Get aggregated metrics |
+| `GET` | `/health` | Health check |
 | `WS` | `/ws/simulations/{id}` | Real-time updates |
 
 ---

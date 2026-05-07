@@ -48,10 +48,10 @@ class ScenarioEngine:
     def run_scenario(self, name: str, ticks: Optional[int] = None,
                      override_config: Optional[Dict] = None) -> Dict[str, Any]:
         """Run a named scenario and return results + summary."""
-        from .definitions import get_scenario
+        from .definitions import get_scenario, list_scenarios
         config = get_scenario(name)
         if config is None:
-            raise ValueError(f"Unknown scenario: {name}. Available: {list(self._scenarios.keys())}")
+            raise ValueError(f"Unknown scenario: {name}. Available: {list_scenarios()}")
 
         if override_config:
             config = {**config, **override_config}
@@ -115,15 +115,16 @@ class ScenarioEngine:
             world.add_zone(zone)
         engine.register_environment(world)
 
-        # Agents
+        # Agents — use seeded RNG for deterministic placement
+        rng = np.random.default_rng(config.get("seed", 42))
         agent_configs = config.get("agents", {})
         agents = []
         for agent_type, count in agent_configs.items():
             agent_cls = AGENT_MAP.get(agent_type, BaseAgent)
             for i in range(count):
                 pos = (
-                    int(np.random.randint(0, world_size[0])),
-                    int(np.random.randint(0, world_size[1])),
+                    int(rng.integers(0, world_size[0])),
+                    int(rng.integers(0, world_size[1])),
                 )
                 agent = agent_cls(agent_id=f"{agent_type}_{i:04d}", position=pos)
                 agents.append(agent)

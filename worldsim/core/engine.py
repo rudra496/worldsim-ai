@@ -207,8 +207,8 @@ class SimulationEngine:
         # Efficiency: production / energy ratio
         efficiency = total_production / total_energy if total_energy > 0 else 0.0
 
-        # Throughput: agents completing tasks per tick
-        throughput = agent_count * 0.1  # simplified
+        # Throughput: production output relative to agent count
+        throughput = total_production / agent_count if agent_count > 0 else 0.0
 
         # Resource utilization: fraction of resources used
         resource_util = min(1.0, total_energy / 1000.0) if agent_count > 0 else 0.0
@@ -268,6 +268,9 @@ class SimulationEngine:
         self._running = False
         self._tick = 0
         self.state = StateManager()
+        self._agents = []
+        self._environment = None
+        self._ai_modules.clear()
         self._results.clear()
         self.event_bus.clear_log()
         self._rng = np.random.default_rng(self.config.seed)

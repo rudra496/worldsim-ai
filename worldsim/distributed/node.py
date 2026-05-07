@@ -50,7 +50,7 @@ class SimulationNode:
         self._agent_states: Dict[str, Dict[str, Any]] = {}
         self._pending_incoming: Dict[str, List[AgentUpdate]] = {}
         self._tick = 0
-        self._lock = threading.Lock()
+        self._lock = threading.RLock()
         self._heartbeat_interval = 5.0
         self._heartbeat_thread: Optional[threading.Thread] = None
         self._stop_event = threading.Event()

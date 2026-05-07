@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import logging
+from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
 
 import numpy as np
@@ -97,8 +98,8 @@ class SimulationEnv:
         reward /= self.num_agents  # normalize
         
         # Terminal conditions
-        terminated = self._step_count >= self.max_steps
-        truncated = bool(np.any(self._energy < 5))  # all agents exhausted
+        terminated = bool(np.any(self._energy < 5))
+        truncated = self._step_count >= self.max_steps
         
         info = {"step": self._step_count, "total_resources": float(np.sum(self._resources)),
                 "avg_energy": float(np.mean(self._energy))}

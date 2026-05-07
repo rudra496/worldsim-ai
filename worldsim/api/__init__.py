@@ -65,7 +65,7 @@ def list_scenarios():
 
 
 @app.post("/simulations/start")
-def start_simulation(req: SimulationStartRequest):
+async def start_simulation(req: SimulationStartRequest):
     from worldsim.scenarios.engine import ScenarioEngine
     from worldsim.scenarios.definitions import get_scenario
 
@@ -83,7 +83,6 @@ def start_simulation(req: SimulationStartRequest):
         "summary": None,
     }
 
-    # Run in background
     async def _run():
         try:
             engine = ScenarioEngine()

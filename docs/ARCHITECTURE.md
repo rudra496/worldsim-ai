@@ -51,7 +51,7 @@ Intelligence modules that plug into the simulation loop.
 Define, configure, and run simulation experiments.
 
 - **engine.py** — `ScenarioEngine` with `run_scenario()` and `run_comparison()`
-- **definitions.py** — 4 predefined scenarios with full configurations
+- **definitions.py** — 8 predefined scenarios with full configurations
 
 ### 6. API Layer (`worldsim/api/`)
 FastAPI REST + WebSocket server.

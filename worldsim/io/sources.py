@@ -94,7 +94,7 @@ class MQTTSource(DataSource):
         if self._mqtt is None:
             logger.warning("[%s] paho-mqtt unavailable – skipping connect", self.name)
             return
-        client = self._mqtt.Client(mqtt.CallbackAPIVersion.VERSION2)
+        client = self._mqtt.Client(self._mqtt.CallbackAPIVersion.VERSION2)
         client.on_connect = self._on_connect
         client.on_message = self._on_message
         client.connect(self.broker_host, self.broker_port)

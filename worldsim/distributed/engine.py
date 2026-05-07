@@ -122,7 +122,7 @@ class DistributedEngine:
         if self.sync_strategy == SyncStrategy.BARRIER:
             self._barrier_sync()
         elif self.sync_strategy == SyncStrategy.HYBRID:
-            self._barrier_sync()
+            self._hybrid_sync()
         # ASYNC: no sync
 
         return self._tick
@@ -135,6 +135,21 @@ class DistributedEngine:
                 continue
             for state in states:
                 if state.node_id != node.node_id:
+                    node.receive_state(state.node_id, state)
+
+    def _hybrid_sync(self) -> None:
+        """Hybrid sync: barrier for nearby nodes, async for distant ones."""
+        states = [node.get_state() for node in self.nodes if node.status == NodeStatus.RUNNING]
+        node_ids = [n.node_id for n in self.nodes if n.status == NodeStatus.RUNNING]
+        for node in self.nodes:
+            if node.status != NodeStatus.RUNNING:
+                continue
+            idx = node_ids.index(node.node_id)
+            for i, state in enumerate(states):
+                if state.node_id == node.node_id:
+                    continue
+                # Sync with adjacent nodes (barrier), skip distant ones (async)
+                if abs(i - idx) <= 1:
                     node.receive_state(state.node_id, state)
 
     def redistribute_agents(self, failed_node_id: str) -> None:

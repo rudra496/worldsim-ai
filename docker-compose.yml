@@ -28,39 +28,3 @@ services:
       backend:
         condition: service_healthy
     restart: unless-stopped
-
-  postgres:
-    image: postgres:15-alpine
-    container_name: worldsim-db
-    environment:
-      POSTGRES_DB: worldsim
-      POSTGRES_USER: worldsim
-      POSTGRES_PASSWORD: worldsim_dev
-    ports:
-      - "5432:5432"
-    volumes:
-      - pgdata:/var/lib/postgresql/data
-    restart: unless-stopped
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U worldsim"]
-      interval: 5s
-      timeout: 3s
-      retries: 3
-
-  redis:
-    image: redis:7-alpine
-    container_name: worldsim-redis
-    ports:
-      - "6379:6379"
-    volumes:
-      - redisdata:/data
-    restart: unless-stopped
-    healthcheck:
-      test: ["CMD", "redis-cli", "ping"]
-      interval: 5s
-      timeout: 3s
-      retries: 3
-
-volumes:
-  pgdata:
-  redisdata:

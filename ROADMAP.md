@@ -12,10 +12,10 @@
 - [x] Statistical anomaly detection (z-score based)
 - [x] LP-based optimization (resource allocation via scipy)
 - [x] Priority scheduling optimization
-- [x] Scenario engine with 4 demo scenarios (334 agents, 25 zones)
-- [x] FastAPI REST + WebSocket API (8 endpoints)
+- [x] Scenario engine with 8 demo scenarios
+- [x] FastAPI REST + WebSocket API (9 endpoints)
 - [x] React 2D visualization dashboard with dark theme
-- [x] Docker Compose (backend, frontend, PostgreSQL, Redis)
+- [x] Docker Compose (backend + frontend)
 - [x] Config-driven architecture (YAML)
 - [x] Metrics collection, aggregation, and export (JSON/CSV/text)
 - [x] Deterministic mode for reproducibility (seed-based)
@@ -73,7 +73,7 @@
 - [x] GeoFence with ray-casting algorithm (shapely optional)
 - [x] Plugin system with ABC interface and hot-reload
 - [x] Built-in plugins: LoggingPlugin, MetricsExportPlugin, SlackNotifyPlugin
-- [x] Plugin marketplace client (catalog, search, install/uninstall)
+- [x] Plugin marketplace (local catalog with search and install)
 - [x] Local plugin registry (~/.worldsim/plugins/)
 - [x] TwinConnector (REST push/pull, WebSocket bidirectional sync)
 - [x] API key authentication with role-based access

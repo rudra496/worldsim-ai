@@ -31,8 +31,12 @@ def main():
         from run_demo import run_demo
         run_demo()
     elif cmd == "serve":
-        import uvicorn
-        uvicorn.run("worldsim.api.main:app", host="0.0.0.0", port=8000, reload=True)
+        try:
+            import uvicorn
+        except ImportError:
+            print("Error: uvicorn is required. Install with: pip install uvicorn")
+            return
+        uvicorn.run("worldsim.api:app", host="0.0.0.0", port=8000, reload=True)
     else:
         print(f"Unknown command: {cmd}")
 

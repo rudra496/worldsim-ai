@@ -28,9 +28,9 @@ class APIKeyAuth:
         info = self._keys.get(key)
         if not info:
             return False
-        roles = {"read", "write", "admin"}
-        key_role_level = roles.index(info["role"]) if info["role"] in roles else 0
-        required_level = roles.index(required_role) if required_role in roles else 0
+        role_hierarchy = {"read": 0, "write": 1, "admin": 2}
+        key_role_level = role_hierarchy.get(info["role"], 0)
+        required_level = role_hierarchy.get(required_role, 0)
         return key_role_level >= required_level
 
     def revoke(self, key: str) -> bool:
