@@ -1,0 +1,24 @@
+name: Stale Issues & PRs
+
+on:
+  schedule:
+    - cron: "0 0 * * *"
+
+jobs:
+  stale:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      pull-requests: write
+    steps:
+      - uses: actions/stale@v9
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          stale-issue-message: >
+            This issue has been marked as stale. It will be closed in 7 days without activity.
+          stale-pr-message: >
+            This PR has been marked as stale. It will be closed in 7 days without updates.
+          days-before-stale: 60
+          days-before-close: 7
+          exempt-issue-labels: "pinned,security,enhancement"
+          exempt-pr-labels: "pinned"
