@@ -4,7 +4,7 @@ build-backend = "setuptools.backends._legacy:_Backend"
 
 [project]
 name = "worldsim-ai"
-version = "0.1.0"
+version = "1.0.0"
 description = "AI-Powered Digital Twin Simulation Platform"
 readme = "README.md"
 license = {text = "MIT"}
