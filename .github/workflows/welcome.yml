@@ -1,13 +1,12 @@
 name: Welcome New Contributors
-
 on:
-  pull_request_target:
-    types: [opened]
   issues:
     types: [opened]
-
+  pull_request_target:
+    types: [opened]
 jobs:
   welcome:
+    if: ${{ github.event.issue.user.type != 'Bot' && github.event.pull_request.user.type != 'Bot' }}
     runs-on: ubuntu-latest
     permissions:
       issues: write
@@ -16,7 +15,5 @@ jobs:
       - uses: actions/first-interaction@v3
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
-          issue-message: >
-            Welcome to WorldSim AI! Thanks for opening this issue.
-          pr-message: >
-            Welcome to WorldSim AI! Thanks for your first pull request!
+          issue_message: "Thanks for opening your first issue! We'll review it soon."
+          pr_message: "Welcome! Thanks for your first PR. A maintainer will review it shortly."
