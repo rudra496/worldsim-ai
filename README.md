@@ -19,6 +19,7 @@
 
 > If you find this project useful, please consider giving it a ⭐ star — it helps more developers discover it!
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22118796.svg)](https://doi.org/10.5281/zenodo.22118796)
 [![GitHub stars](https://img.shields.io/github/stars/rudra496/worldsim-ai?style=social)](https://github.com/rudra496/worldsim-ai/stargazers)
 [![GitHub forks](https://img.shields.io/github/forks/rudra496/worldsim-ai?style=social)](https://github.com/rudra496/worldsim-ai/network/members)
 [![GitHub watchers](https://img.shields.io/github/watchers/rudra496/worldsim-ai?style=social)](https://github.com/rudra496/worldsim-ai/watchers)
