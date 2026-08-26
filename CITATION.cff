@@ -1,0 +1,20 @@
+cff-version: 1.2.0
+message: "If you use WorldSim AI or reference its digital twin simulation architecture, please cite it as below."
+title: "WorldSim AI: Autonomous World Simulation Engine and Multi-Agent Digital Twin Framework"
+authors:
+  - family-names: "Sarker"
+    given-names: "Rudra"
+    affiliation: "Shahjalal University of Science and Technology, Bangladesh"
+    orcid: "https://orcid.org/0009-0001-4545-0932"
+abstract: "WorldSim AI is an open-source world simulation and digital twin engine for generating, exploring, and interacting with complex dynamic environments. Featuring reinforcement learning agent models, distributed node simulation, physics constraints, and scenario generation."
+version: 1.1.0
+date-released: 2026-08-26
+license: "MIT"
+repository-code: "https://github.com/rudra496/worldsim-ai"
+keywords:
+  - "world-models"
+  - "digital-twin"
+  - "multi-agent-systems"
+  - "reinforcement-learning"
+  - "distributed-simulation"
+  - "open-source"
