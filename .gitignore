@@ -34,6 +34,7 @@ Thumbs.db
 # Experiments
 experiments/results/*.json
 experiments/results/*.csv
+experiments/results/*.txt
 
 # Docker
 postgres_data/
